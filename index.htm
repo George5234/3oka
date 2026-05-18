@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعكتي سنية ❤️</title>
+    <title>يا عكتي سنية ❤️‍🔥</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=El+Messiri:wght@700;900&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #1a0033, #330022);
+            font-family: 'Cairo', 'El Messiri', sans-serif;
+            background: linear-gradient(135deg, #1a0033, #330011);
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -18,6 +18,23 @@
             align-items: center;
             color: #ffe6f0;
             position: relative;
+        }
+
+        .background-text {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            font-size: clamp(55px, 14vw, 130px);
+            font-weight: 900;
+            color: rgba(255, 80, 120, 0.06);
+            pointer-events: none;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            user-select: none;
         }
 
         #heartCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
@@ -28,89 +45,93 @@
             width: 90%;
             max-width: 680px;
             text-align: center;
-            padding: 40px 20px;
         }
 
-        /* القلب الأنيق */
+        /* القلب البارز */
         .big-heart {
-            font-size: clamp(110px, 22vw, 190px);
-            animation: heartbeatSoft 2.2s infinite alternate ease-in-out;
-            filter: drop-shadow(0 0 35px #ff3366) drop-shadow(0 0 70px #ff6699);
+            font-size: clamp(130px, 25vw, 210px);
+            animation: heartbeatStrong 1.6s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 50px #ff3366) drop-shadow(0 0 100px #ff0066);
             cursor: pointer;
-            transition: transform 0.4s;
-        }
-        .big-heart:hover {
-            transform: scale(1.15);
+            transition: all 0.3s;
+            position: relative;
         }
 
-        @keyframes heartbeatSoft {
+        @keyframes heartbeatStrong {
             from { transform: scale(1); }
-            to { transform: scale(1.18); }
+            to { transform: scale(1.25); }
         }
 
-        /* اليد الدالة */
         .pointing-hand {
             position: absolute;
-            font-size: 55px;
-            top: -70px;
+            font-size: 65px;
+            top: -85px;
             left: 50%;
             transform: translateX(-50%);
-            animation: pointAnim 3s infinite ease-in-out;
+            animation: pointAnim 2.5s infinite ease-in-out;
             z-index: 15;
-            opacity: 0.85;
         }
         @keyframes pointAnim {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-20px); }
+            50% { transform: translateX(-50%) translateY(-30px); }
         }
 
         #typingTitle {
-            font-size: clamp(2.1rem, 7.5vw, 3.8rem);
-            font-weight: 700;
-            margin: 20px 0;
-            text-shadow: 0 0 25px #ff6699;
-            min-height: 1.4em;
+            font-size: clamp(2.1rem, 7.5vw, 3.7rem);
+            font-weight: 900;
+            margin: 20px 0 10px;
+            text-shadow: 0 0 35px #ff6699;
         }
 
         .akka-name {
-            font-size: clamp(2.6rem, 9vw, 4.8rem);
+            font-size: clamp(2.8rem, 10vw, 5.2rem);
             font-weight: 900;
-            background: linear-gradient(90deg, #ff6699, #ff99cc, #ff6699);
+            background: linear-gradient(90deg, #ff3366, #ff99cc, #ff3366);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 15px 0;
             cursor: pointer;
         }
 
         .message-bubble {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
-            border: 2px solid rgba(255, 102, 153, 0.4);
+            border: 2px solid rgba(255, 100, 150, 0.5);
             border-radius: 50px;
             padding: 22px 35px;
-            font-size: clamp(1.25rem, 4vw, 1.9rem);
+            font-size: clamp(1.3rem, 4.3vw, 1.9rem);
             margin: 18px 0;
-            box-shadow: 0 0 30px rgba(255, 80, 120, 0.3);
         }
 
-        .music-control {
-            margin-top: 30px;
-            background: rgba(255, 102, 153, 0.2);
-            border: none;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            font-size: 2.2rem;
-            cursor: pointer;
+        /* الرسالة السرية المنبثقة */
+        .secret-message {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.3) rotate(-8deg);
+            background: linear-gradient(135deg, #2a003a, #4a004a);
+            color: #ffccdd;
+            font-size: clamp(1.9rem, 5.5vw, 2.9rem);
+            padding: 40px 55px;
+            border-radius: 35px;
+            border: 5px solid #ff3366;
+            box-shadow: 0 0 120px #ff0066;
+            z-index: 100;
+            text-align: center;
+            max-width: 90%;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+        }
+        .secret-message.show {
+            transform: translate(-50%, -50%) scale(1) rotate(0);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
+    <div class="background-text">يا عكتي يا سنية ❤️‍🔥 نار يا عكة 😈</div>
     <canvas id="heartCanvas"></canvas>
 
-    <!-- صوت أمبيانس رومانسي (يشتغل تلقائي) -->
-    <audio id="bgMusic" loop autoplay>
+    <audio id="bgMusic" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
     </audio>
 
@@ -123,18 +144,23 @@
         <div id="typingTitle"></div>
         <div class="akka-name" id="akkaText">يا عكتي سنية</div>
 
-        <div class="message-bubble">❤️ يا روحي يا سنية، أنتِ أحلى حاجة في حياتي ❤️</div>
-        <div class="message-bubble">🥺 آسف يا قلبي... نعاود نعيشو لحظاتنا الحلوة؟</div>
+        <div class="message-bubble">❤️ يا روحي، برشا نحبك يا أحلى عكة</div>
+        <div class="message-bubble">😈 تحب نتصالح ولا نكمل نعذب بعضنا؟ 😂</div>
+    </div>
 
-        <button class="music-control" id="musicBtn">🎵</button>
+    <!-- الرسالة السرية -->
+    <div class="secret-message" id="secretMsg">
+        😈 يا عكتي سنية..<br><br>
+        حتى لو كنتي شيطانة صغيرة برشا 😂<br>
+        قلبي ملكك.. تعالي نتصالح ونعمل حاجات ساخنة 🔥❤️
     </div>
 
     <script>
-        // Canvas - أمبيانس ناعم
+        // Canvas + Fountain Effect
         const canvas = document.getElementById('heartCanvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
-        const emojis = ['❤️', '💕', '💖', '🌹', '✨', '💗', '🌸'];
+        const emojis = ['❤️', '💕', '💖', '🌹', '💗', '🔥', '😈', '💋'];
 
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
@@ -148,25 +174,28 @@
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * -height;
-                this.size = Math.random() * 28 + 16;
-                this.speedY = Math.random() * 1.8 + 0.6;
-                this.speedX = Math.random() * 0.8 - 0.4;
+                this.size = Math.random() * 32 + 18;
+                this.speedY = Math.random() * 2 + 0.8;
+                this.speedX = Math.random() * 1.2 - 0.6;
                 this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
-                this.opacity = Math.random() * 0.65 + 0.45;
+                this.opacity = Math.random() * 0.75 + 0.5;
                 this.rotation = Math.random() * 360;
-                this.rotSpeed = Math.random() * 1.2 - 0.6;
+                this.rotSpeed = Math.random() * 3 - 1.5;
+                this.life = 300;
             }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
+            update() { 
+                this.y += this.speedY; 
+                this.x += this.speedX; 
                 this.rotation += this.rotSpeed;
-                if (this.y > height + 80) this.reset();
+                this.speedY += 0.08; // جاذبية
+                this.life--;
+                if (this.life <= 0 || this.y > height + 100) this.reset();
             }
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.opacity;
                 ctx.translate(this.x, this.y);
-                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.rotate(this.rotation * Math.PI / 180);
                 ctx.font = `${this.size}px Arial`;
                 ctx.textAlign = 'center';
                 ctx.fillText(this.emoji, 0, 0);
@@ -174,7 +203,7 @@
             }
         }
 
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        for (let i = 0; i < 70; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
@@ -183,13 +212,8 @@
         }
         animate();
 
-        // Typing Effect (تونسي)
-        const titles = [
-            "مرحبا يا سنية ❤️",
-            "يا عكتي الغالية",
-            "أنتِ نور عيني",
-            "بحبك يا روحي"
-        ];
+        // Typing
+        const titles = ["يا عكتي سنية ❤️", "برشا نحبك يا روحي", "أنتِ نار يا مجنونة 😈", "تعالي نتصالح"];
         let titleIndex = 0, charIndex = 0, isDeleting = false;
         const typingElement = document.getElementById('typingTitle');
 
@@ -198,69 +222,81 @@
             if (!isDeleting) {
                 typingElement.textContent = current.substring(0, charIndex + 1);
                 charIndex++;
-                if (charIndex === current.length) { isDeleting = true; setTimeout(typeEffect, 2200); return; }
+                if (charIndex === current.length) { isDeleting = true; setTimeout(typeEffect, 2000); return; }
             } else {
                 typingElement.textContent = current.substring(0, charIndex - 1);
                 charIndex--;
                 if (charIndex === 0) { isDeleting = false; titleIndex = (titleIndex + 1) % titles.length; }
             }
-            setTimeout(typeEffect, isDeleting ? 50 : 90);
+            setTimeout(typeEffect, isDeleting ? 45 : 85);
         }
         typeEffect();
 
-        // الموسيقى (تلقائي + تحكم)
+        // Music
         const bgMusic = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicBtn');
-        
-        // محاولة تشغيل تلقائي
-        bgMusic.volume = 0.6;
-        bgMusic.play().catch(() => {});
+        bgMusic.volume = 0.5;
+        const tryPlay = () => bgMusic.play().catch(() => {});
+        document.addEventListener('click', tryPlay, { once: true });
+        tryPlay();
 
-        musicBtn.addEventListener('click', () => {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicBtn.textContent = '🔊';
-            } else {
-                bgMusic.pause();
-                musicBtn.textContent = '🎵';
-            }
-        });
-
-        // النقر على القلب
+        // Click on Heart
         const mainHeart = document.getElementById('mainHeart');
+        const secretMsg = document.getElementById('secretMsg');
+
         mainHeart.addEventListener('click', (e) => {
-            // انفجار خفيف أنيق
-            for (let i = 0; i < 18; i++) {
+            // ارتجاج القلب
+            mainHeart.style.animation = 'none';
+            void mainHeart.offsetWidth;
+            mainHeart.style.animation = 'heartbeatStrong 0.4s, shakeHard 0.7s';
+
+            // زيادة صوت الموسيقى مؤقتاً
+            bgMusic.volume = 0.75;
+            setTimeout(() => bgMusic.volume = 0.55, 3000);
+
+            // Fountain Effect (ينبوع)
+            const rect = mainHeart.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2 - 30;
+
+            for (let i = 0; i < 45; i++) {
                 setTimeout(() => {
                     const p = new Particle();
-                    p.x = e.clientX;
-                    p.y = e.clientY - 40;
-                    p.speedY = -Math.random() * 6 - 2;
-                    p.speedX = Math.random() * 5 - 2.5;
+                    p.x = centerX;
+                    p.y = centerY;
+                    p.speedY = -Math.random() * 13 - 6;   // قوة لفوق
+                    p.speedX = Math.random() * 9 - 4.5;
+                    p.size = Math.random() * 28 + 22;
+                    p.opacity = 0.9;
                     particles.push(p);
-                    setTimeout(() => particles.splice(particles.indexOf(p),1), 3000);
-                }, i * 40);
+                }, i * 12);
             }
+
+            // الرسالة السرية
+            secretMsg.classList.add('show');
+            setTimeout(() => secretMsg.classList.remove('show'), 5000);
         });
 
-        // تغيير الألقاب التونسية
+        // Shake animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shakeHard {
+                0%,100% { transform: translateX(0) rotate(0); }
+                20% { transform: translateX(-15px) rotate(-10deg); }
+                40% { transform: translateX(15px) rotate(10deg); }
+                60% { transform: translateX(-10px) rotate(-6deg); }
+                80% { transform: translateX(10px) rotate(6deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // تغيير الألقاب
         const akkaText = document.getElementById('akkaText');
-        const names = [
-            "يا عكتي سنية ❤️",
-            "يا روحي",
-            "يا قلبي",
-            "عكتي الغالية",
-            "يا سنية يا حلوة"
-        ];
+        const names = ["يا عكتي سنية ❤️", "يا نار يا عكة 😈", "روحي وغاليتي", "عكتي المجنونة 😂"];
         let idx = 0;
         akkaText.addEventListener('click', () => {
             idx = (idx + 1) % names.length;
             akkaText.textContent = names[idx];
         });
-
-        // اليد الدالة
-        const hand = document.getElementById('pointHand');
-        setInterval(() => hand.style.opacity = hand.style.opacity === '0.3' ? '0.9' : '0.3', 2800);
     </script>
 </body>
 </html>
