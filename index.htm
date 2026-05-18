@@ -3,164 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>يا عكتي سنية ❤️‍🔥</title>
+    <title>لعكة قلبي ❤️ سنية</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=El+Messiri:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=El+Messiri:wght@700&display=swap');
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Cairo', 'El Messiri', sans-serif;
-            background: linear-gradient(135deg, #1a0033, #330011);
+            background: #0a0015;
             height: 100vh;
-            overflow: hidden;
+            width: 100vw;
+            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #ffe6f0;
             position: relative;
         }
 
-        .background-text {
+        #heartCanvas {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            font-size: clamp(55px, 14vw, 130px);
-            font-weight: 900;
-            color: rgba(255, 80, 120, 0.06);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
             pointer-events: none;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            user-select: none;
         }
-
-        #heartCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
         .love-container {
             position: relative;
             z-index: 10;
             width: 90%;
-            max-width: 680px;
+            max-width: 800px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 15px;
         }
 
-        /* القلب البارز */
-        .big-heart {
-            font-size: clamp(130px, 25vw, 210px);
-            animation: heartbeatStrong 1.6s infinite alternate ease-in-out;
-            filter: drop-shadow(0 0 50px #ff3366) drop-shadow(0 0 100px #ff0066);
-            cursor: pointer;
-            transition: all 0.3s;
+        /* ============ تحسينات القلب ============ */
+        .heart-wrapper {
             position: relative;
+            display: inline-block;
+            animation: floatHeart 3s infinite ease-in-out;
+            margin-bottom: 10px;
         }
 
-        @keyframes heartbeatStrong {
-            from { transform: scale(1); }
-            to { transform: scale(1.25); }
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
-        .pointing-hand {
+        .big-heart {
+            font-size: clamp(150px, 25vw, 280px);
+            animation: megaHeartbeat 0.6s infinite alternate;
+            filter: drop-shadow(0 0 40px #ff3366) drop-shadow(0 0 80px #ff0066) drop-shadow(0 0 120px #ff0033);
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            z-index: 20;
+            display: block;
+            line-height: 1;
+        }
+
+        @keyframes megaHeartbeat {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 40px #ff3366) drop-shadow(0 0 80px #ff0066) drop-shadow(0 0 120px #ff0033);
+            }
+            100% {
+                transform: scale(1.2);
+                filter: drop-shadow(0 0 60px #ff6699) drop-shadow(0 0 120px #ff3366) drop-shadow(0 0 180px #ff0000);
+            }
+        }
+
+        .big-heart:hover {
+            animation: insaneHeartbeat 0.25s infinite alternate;
+            filter: drop-shadow(0 0 80px #ff6699) drop-shadow(0 0 150px #ff3366) drop-shadow(0 0 220px #ff0000);
+            transform: scale(1.3);
+        }
+
+        @keyframes insaneHeartbeat {
+            0% {
+                transform: scale(1.2) rotate(-5deg);
+            }
+            100% {
+                transform: scale(1.4) rotate(5deg);
+            }
+        }
+
+        .click-hint {
             position: absolute;
-            font-size: 65px;
-            top: -85px;
+            top: -60px;
             left: 50%;
             transform: translateX(-50%);
-            animation: pointAnim 2.5s infinite ease-in-out;
-            z-index: 15;
-        }
-        @keyframes pointAnim {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-30px); }
+            color: #ffcc00;
+            font-size: 1.5rem;
+            font-weight: 900;
+            white-space: nowrap;
+            animation: bounceHint 0.8s infinite alternate, glowHint 1.5s infinite alternate;
+            text-shadow: 0 0 20px #ff0066, 0 0 40px #ff3300;
+            pointer-events: none;
+            z-index: 25;
         }
 
+        @keyframes bounceHint {
+            0% { transform: translateX(-50%) translateY(0px); }
+            100% { transform: translateX(-50%) translateY(-15px); }
+        }
+        @keyframes glowHint {
+            0% { opacity: 0.7; text-shadow: 0 0 20px #ff0066; }
+            100% { opacity: 1; text-shadow: 0 0 40px #ffcc00, 0 0 60px #ff3300; }
+        }
+
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 51, 102, 0.5);
+            animation: pulseRing 2s infinite ease-out;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .pulse-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .pulse-ring:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 1;
+                border-color: rgba(255, 51, 102, 0.8);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.8);
+                opacity: 0;
+                border-color: rgba(255, 51, 102, 0);
+            }
+        }
+
+        /* ============ بقية العناصر ============ */
         #typingTitle {
-            font-size: clamp(2.1rem, 7.5vw, 3.7rem);
+            color: #fff5e6;
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 900;
-            margin: 20px 0 10px;
-            text-shadow: 0 0 35px #ff6699;
+            text-shadow: 0 0 20px #ff3366, 0 0 40px #ff6699;
+            min-height: 1.5em;
+            border-left: 4px solid #ff3366;
+            padding-left: 15px;
+            animation: blinkBorder 1s infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: 2px;
+        }
+        @keyframes blinkBorder {
+            50% { border-color: transparent; }
         }
 
         .akka-name {
-            font-size: clamp(2.8rem, 10vw, 5.2rem);
+            font-size: clamp(2.5rem, 10vw, 5rem);
             font-weight: 900;
-            background: linear-gradient(90deg, #ff3366, #ff99cc, #ff3366);
+            background: linear-gradient(45deg, #ff0066, #ff9933, #ff0066);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientMove 2s linear infinite;
+            filter: drop-shadow(0 0 20px #ff6600);
+            transition: all 0.3s;
             cursor: pointer;
+        }
+        .akka-name:hover {
+            filter: drop-shadow(0 0 40px #ff0066);
+            transform: rotate(-3deg) scale(1.1);
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .message-bubble {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border: 2px solid rgba(255, 100, 150, 0.5);
+            background: rgba(255, 51, 102, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 50px;
-            padding: 22px 35px;
-            font-size: clamp(1.3rem, 4.3vw, 1.9rem);
-            margin: 18px 0;
+            padding: 20px 35px;
+            border: 2px solid rgba(255, 102, 153, 0.5);
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #fff0f5;
+            font-weight: 700;
+            animation: floatBubble 3s infinite ease-in-out;
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.4);
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .message-bubble:hover {
+            background: rgba(255, 51, 102, 0.3);
+            box-shadow: 0 0 60px rgba(255, 0, 51, 0.8);
+            transform: scale(1.05);
         }
 
-        /* الرسالة السرية المنبثقة */
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* الرسالة السرية */
         .secret-message {
             position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0.3) rotate(-8deg);
-            background: linear-gradient(135deg, #2a003a, #4a004a);
-            color: #ffccdd;
-            font-size: clamp(1.9rem, 5.5vw, 2.9rem);
-            padding: 40px 55px;
-            border-radius: 35px;
-            border: 5px solid #ff3366;
-            box-shadow: 0 0 120px #ff0066;
-            z-index: 100;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.95);
+            color: #ffcc00;
+            font-size: 2.5rem;
+            font-weight: 900;
+            padding: 30px 50px;
+            border-radius: 30px;
+            z-index: 200;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid #ff0066;
+            box-shadow: 0 0 100px #ff3366, 0 0 200px #ff0000;
             text-align: center;
-            max-width: 90%;
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+            pointer-events: none;
         }
         .secret-message.show {
-            transform: translate(-50%, -50%) scale(1) rotate(0);
-            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            animation: shakeMessage 0.3s ease-in-out 0.5s;
+        }
+        @keyframes shakeMessage {
+            0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            25% { transform: translate(-50%, -50%) scale(1.05) rotate(-3deg); }
+            75% { transform: translate(-50%, -50%) scale(1.05) rotate(3deg); }
+        }
+
+        @media (max-width: 600px) {
+            .love-container {
+                gap: 12px;
+                padding: 15px 10px;
+            }
+            .message-bubble {
+                padding: 12px 20px;
+            }
+            .big-heart {
+                font-size: clamp(120px, 30vw, 200px);
+            }
+            .click-hint {
+                font-size: 1.2rem;
+                top: -45px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-text">يا عكتي يا سنية ❤️‍🔥 نار يا عكة 😈</div>
     <canvas id="heartCanvas"></canvas>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop autoplay preload="auto">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="heartbeatSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="giggleSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1172/1172-preview.mp3" type="audio/mpeg">
     </audio>
 
     <div class="love-container">
-        <div style="position: relative; display: inline-block;">
-            <div class="pointing-hand" id="pointHand">👆</div>
+        
+        <!-- القلب العملاق مع الحلقات والتلميح -->
+        <div class="heart-wrapper">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="click-hint">👇 اضغطيني يا عكة 👇</div>
             <div class="big-heart" id="mainHeart">❤️‍🔥</div>
         </div>
 
         <div id="typingTitle"></div>
-        <div class="akka-name" id="akkaText">يا عكتي سنية</div>
 
-        <div class="message-bubble">❤️ يا روحي، برشا نحبك يا أحلى عكة</div>
-        <div class="message-bubble">😈 تحب نتصالح ولا نكمل نعذب بعضنا؟ 😂</div>
+        <div class="akka-name" id="akkaText">يا عكة قلبي</div>
+
+        <div class="message-bubble">
+            💖 بحبك يا أحلى عكة في الدنيا 💖
+        </div>
+
+        <div class="message-bubble" style="animation-delay: 0.5s; background: rgba(255, 153, 51, 0.2); border-color: #ff9933;">
+            😂 انتي عكتي المفضلة 😂
+        </div>
     </div>
 
-    <!-- الرسالة السرية -->
     <div class="secret-message" id="secretMsg">
-        😈 يا عكتي سنية..<br><br>
-        حتى لو كنتي شيطانة صغيرة برشا 😂<br>
-        قلبي ملكك.. تعالي نتصالح ونعمل حاجات ساخنة 🔥❤️
+        بحبك يا سنية ❤️<br>حتى لو كنتي أعتى عكة في التاريخ! 😘🔥
     </div>
 
     <script>
-        // Canvas + Fountain Effect
+        // ============ 1. خلفية الأمطار ============
         const canvas = document.getElementById('heartCanvas');
         const ctx = canvas.getContext('2d');
-        let width, height, particles = [];
-        const emojis = ['❤️', '💕', '💖', '🌹', '💗', '🔥', '😈', '💋'];
+        let width, height;
+        let particles = [];
 
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
@@ -169,33 +325,36 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
+        const emojis = ['❤️', '💕', '💖', '💘', '💝', '🌹', '🥀', '✨', '🌸', '💮'];
+
         class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * -height;
-                this.size = Math.random() * 32 + 18;
-                this.speedY = Math.random() * 2 + 0.8;
-                this.speedX = Math.random() * 1.2 - 0.6;
+            constructor(x, y, speedX, speedY, size) {
+                this.x = x || Math.random() * width;
+                this.y = y || Math.random() * -height;
+                this.size = size || Math.random() * 30 + 15;
+                this.speedY = speedY || Math.random() * 2 + 0.5;
+                this.speedX = speedX || Math.random() * 1 - 0.5;
                 this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
-                this.opacity = Math.random() * 0.75 + 0.5;
+                this.opacity = Math.random() * 0.6 + 0.4;
                 this.rotation = Math.random() * 360;
-                this.rotSpeed = Math.random() * 3 - 1.5;
-                this.life = 300;
+                this.rotSpeed = Math.random() * 2 - 1;
             }
-            update() { 
-                this.y += this.speedY; 
-                this.x += this.speedX; 
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
                 this.rotation += this.rotSpeed;
-                this.speedY += 0.08; // جاذبية
-                this.life--;
-                if (this.life <= 0 || this.y > height + 100) this.reset();
+                if (this.y > height + 50) {
+                    this.y = -50;
+                    this.x = Math.random() * width;
+                }
+                if (this.x > width + 50) this.x = -50;
+                if (this.x < -50) this.x = width + 50;
             }
-            draw() {
+            draw(ctx) {
                 ctx.save();
                 ctx.globalAlpha = this.opacity;
                 ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.rotate((this.rotation * Math.PI) / 180);
                 ctx.font = `${this.size}px Arial`;
                 ctx.textAlign = 'center';
                 ctx.fillText(this.emoji, 0, 0);
@@ -203,100 +362,164 @@
             }
         }
 
-        for (let i = 0; i < 70; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
+        for (let i = 0; i < 55; i++) {
+            particles.push(new Particle());
         }
-        animate();
 
-        // Typing
-        const titles = ["يا عكتي سنية ❤️", "برشا نحبك يا روحي", "أنتِ نار يا مجنونة 😈", "تعالي نتصالح"];
-        let titleIndex = 0, charIndex = 0, isDeleting = false;
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw(ctx);
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // ============ 2. الموسيقى تلقائياً ============
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.85;
+        
+        function forcePlayMusic() {
+            bgMusic.play().catch(() => {
+                document.addEventListener('click', function playOnClick() {
+                    bgMusic.play();
+                    document.removeEventListener('click', playOnClick);
+                }, { once: true });
+            });
+        }
+        window.addEventListener('load', forcePlayMusic);
+        forcePlayMusic();
+
+        // ============ 3. المؤثرات الصوتية ============
+        const heartbeatSound = document.getElementById('heartbeatSound');
+        const giggleSound = document.getElementById('giggleSound');
+        heartbeatSound.volume = 0.7;
+        giggleSound.volume = 0.6;
+
+        function playHeartbeat() {
+            heartbeatSound.currentTime = 0;
+            heartbeatSound.play().catch(() => {});
+        }
+        function playGiggle() {
+            giggleSound.currentTime = 0;
+            giggleSound.play().catch(() => {});
+        }
+
+        // ============ 4. تأثير الكتابة ============
+        const titles = [
+            "مرحباً يا سنية ❤️",
+            "أجمل عكة في الكون 🌍",
+            "حبيبتي المجنونة 😍",
+            "يا مزة يا عكة 😂🔥"
+        ];
+        let titleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
         const typingElement = document.getElementById('typingTitle');
 
         function typeEffect() {
-            const current = titles[titleIndex];
+            const currentTitle = titles[titleIndex];
+            
             if (!isDeleting) {
-                typingElement.textContent = current.substring(0, charIndex + 1);
+                typingElement.textContent = currentTitle.substring(0, charIndex + 1);
                 charIndex++;
-                if (charIndex === current.length) { isDeleting = true; setTimeout(typeEffect, 2000); return; }
+                
+                if (charIndex === currentTitle.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 2000);
+                    return;
+                }
             } else {
-                typingElement.textContent = current.substring(0, charIndex - 1);
+                typingElement.textContent = currentTitle.substring(0, charIndex - 1);
                 charIndex--;
-                if (charIndex === 0) { isDeleting = false; titleIndex = (titleIndex + 1) % titles.length; }
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    titleIndex = (titleIndex + 1) % titles.length;
+                }
             }
-            setTimeout(typeEffect, isDeleting ? 45 : 85);
+            
+            setTimeout(typeEffect, isDeleting ? 50 : 100);
         }
         typeEffect();
 
-        // Music
-        const bgMusic = document.getElementById('bgMusic');
-        bgMusic.volume = 0.5;
-        const tryPlay = () => bgMusic.play().catch(() => {});
-        document.addEventListener('click', tryPlay, { once: true });
-        tryPlay();
-
-        // Click on Heart
+        // ============ 5. الرسالة السرية والانفجار ============
         const mainHeart = document.getElementById('mainHeart');
         const secretMsg = document.getElementById('secretMsg');
+        let msgTimeout;
 
         mainHeart.addEventListener('click', (e) => {
-            // ارتجاج القلب
-            mainHeart.style.animation = 'none';
-            void mainHeart.offsetWidth;
-            mainHeart.style.animation = 'heartbeatStrong 0.4s, shakeHard 0.7s';
-
-            // زيادة صوت الموسيقى مؤقتاً
-            bgMusic.volume = 0.75;
-            setTimeout(() => bgMusic.volume = 0.55, 3000);
-
-            // Fountain Effect (ينبوع)
+            e.stopPropagation();
+            
+            // إظهار الرسالة
+            secretMsg.classList.add('show');
+            clearTimeout(msgTimeout);
+            msgTimeout = setTimeout(() => {
+                secretMsg.classList.remove('show');
+            }, 4000);
+            
+            // صوت ضحكة
+            playGiggle();
+            
+            // صوت نبضة قوية
+            playHeartbeat();
+            
+            // انفجار قلوب حول القلب
             const rect = mainHeart.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2 - 30;
-
-            for (let i = 0; i < 45; i++) {
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 20; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 80 + 40;
+                const p = new Particle(
+                    centerX + Math.cos(angle) * distance,
+                    centerY + Math.sin(angle) * distance,
+                    Math.cos(angle) * Math.random() * 8 - 4,
+                    Math.sin(angle) * Math.random() * 8 - 6,
+                    Math.random() * 25 + 10
+                );
+                particles.push(p);
                 setTimeout(() => {
-                    const p = new Particle();
-                    p.x = centerX;
-                    p.y = centerY;
-                    p.speedY = -Math.random() * 13 - 6;   // قوة لفوق
-                    p.speedX = Math.random() * 9 - 4.5;
-                    p.size = Math.random() * 28 + 22;
-                    p.opacity = 0.9;
-                    particles.push(p);
-                }, i * 12);
+                    const idx = particles.indexOf(p);
+                    if (idx > -1) particles.splice(idx, 1);
+                }, 2500);
             }
-
-            // الرسالة السرية
-            secretMsg.classList.add('show');
-            setTimeout(() => secretMsg.classList.remove('show'), 5000);
         });
 
-        // Shake animation
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes shakeHard {
-                0%,100% { transform: translateX(0) rotate(0); }
-                20% { transform: translateX(-15px) rotate(-10deg); }
-                40% { transform: translateX(15px) rotate(10deg); }
-                60% { transform: translateX(-10px) rotate(-6deg); }
-                80% { transform: translateX(10px) rotate(6deg); }
+        // إخفاء الرسالة عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            if (!secretMsg.contains(e.target) && e.target !== mainHeart) {
+                secretMsg.classList.remove('show');
             }
-        `;
-        document.head.appendChild(style);
+        });
 
-        // تغيير الألقاب
+        // ============ 6. تدوير اسم عكة ============
         const akkaText = document.getElementById('akkaText');
-        const names = ["يا عكتي سنية ❤️", "يا نار يا عكة 😈", "روحي وغاليتي", "عكتي المجنونة 😂"];
-        let idx = 0;
-        akkaText.addEventListener('click', () => {
-            idx = (idx + 1) % names.length;
-            akkaText.textContent = names[idx];
+        const funnyAdjectives = [
+            'يا عكة قلبي',
+            'يا عكة الروح',
+            'أعتى عكة بالتاريخ',
+            'عكتي الحلوة',
+            'يا مزة يا عكة',
+            'عكة و نصف',
+            'سنية العكة',
+            'عكة مدللة'
+        ];
+        let adjIndex = 0;
+        akkaText.addEventListener('click', (e) => {
+            e.stopPropagation();
+            adjIndex = (adjIndex + 1) % funnyAdjectives.length;
+            akkaText.textContent = funnyAdjectives[adjIndex];
+            akkaText.style.transform = 'scale(1.2) rotate(5deg)';
+            setTimeout(() => {
+                akkaText.style.transform = 'scale(1) rotate(0)';
+            }, 200);
+            playGiggle();
         });
+
+        console.log('❤️ بحبك يا سنية - قلبك العملاق جاهز ❤️');
     </script>
 </body>
 </html>
