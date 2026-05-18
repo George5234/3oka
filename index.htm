@@ -250,6 +250,53 @@
             75% { transform: translate(-50%, -50%) scale(1.05) rotate(3deg); }
         }
 
+        /* ============ لوحة الإحصائيات السرية ============ */
+        .stats-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            border: 2px solid #00ff88;
+            border-radius: 20px;
+            padding: 20px 25px;
+            z-index: 9999;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            display: none;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+            min-width: 220px;
+            direction: ltr;
+        }
+        .stats-panel.visible {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+        .stats-panel h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #00ff88;
+            padding-bottom: 8px;
+            text-align: center;
+        }
+        .stats-panel p {
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        .stats-panel .count {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #ffcc00;
+            text-shadow: 0 0 20px #ffcc00;
+            display: block;
+            text-align: center;
+            margin: 5px 0;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         @media (max-width: 600px) {
             .love-container {
                 gap: 12px;
@@ -264,6 +311,15 @@
             .click-hint {
                 font-size: 1.2rem;
                 top: -45px;
+            }
+            .stats-panel {
+                top: 10px;
+                right: 10px;
+                padding: 15px;
+                min-width: 180px;
+            }
+            .stats-panel .count {
+                font-size: 2rem;
             }
         }
     </style>
@@ -285,7 +341,6 @@
 
     <div class="love-container">
         
-        <!-- القلب العملاق مع الحلقات والتلميح -->
         <div class="heart-wrapper">
             <div class="pulse-ring"></div>
             <div class="pulse-ring"></div>
@@ -309,6 +364,15 @@
 
     <div class="secret-message" id="secretMsg">
         بحبك يا سنية ❤️<br>حتى لو كنتي أعتى عكة في التاريخ! 😘🔥
+    </div>
+
+    <!-- لوحة الإحصائيات السرية (تظهر فقط بكلمة السر) -->
+    <div class="stats-panel" id="statsPanel">
+        <h3>📊 إحصائيات سرية</h3>
+        <p style="text-align:center;">👁️ عدد الزيارات:</p>
+        <span class="count" id="secretCount">0</span>
+        <p>🕐 أول زيارة:<br><span id="firstVisit">-</span></p>
+        <p>🕑 آخر زيارة:<br><span id="lastVisit">-</span></p>
     </div>
 
     <script>
@@ -452,20 +516,15 @@
         mainHeart.addEventListener('click', (e) => {
             e.stopPropagation();
             
-            // إظهار الرسالة
             secretMsg.classList.add('show');
             clearTimeout(msgTimeout);
             msgTimeout = setTimeout(() => {
                 secretMsg.classList.remove('show');
             }, 4000);
             
-            // صوت ضحكة
             playGiggle();
-            
-            // صوت نبضة قوية
             playHeartbeat();
             
-            // انفجار قلوب حول القلب
             const rect = mainHeart.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
@@ -488,7 +547,6 @@
             }
         });
 
-        // إخفاء الرسالة عند النقر خارجها
         document.addEventListener('click', function(e) {
             if (!secretMsg.contains(e.target) && e.target !== mainHeart) {
                 secretMsg.classList.remove('show');
@@ -519,7 +577,57 @@
             playGiggle();
         });
 
-        console.log('❤️ بحبك يا سنية - قلبك العملاق جاهز ❤️');
+        // ============ 7. نظام التتبع السري ============
+        (function() {
+            const VISIT_KEY = '_s_heart_visits';
+            const FIRST_VISIT_KEY = '_s_first_visit';
+            const LAST_VISIT_KEY = '_s_last_visit';
+            
+            let visits = parseInt(localStorage.getItem(VISIT_KEY) || '0');
+            const firstVisit = localStorage.getItem(FIRST_VISIT_KEY);
+            const lastVisit = localStorage.getItem(LAST_VISIT_KEY);
+            
+            visits++;
+            const now = new Date();
+            const nowStr = now.toLocaleString('ar-SA', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit',
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            localStorage.setItem(VISIT_KEY, visits);
+            localStorage.setItem(LAST_VISIT_KEY, nowStr);
+            if (!firstVisit) {
+                localStorage.setItem(FIRST_VISIT_KEY, nowStr);
+            }
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const statsKey = urlParams.get('stats');
+            
+            if (statsKey === 'george') {
+                const panel = document.getElementById('statsPanel');
+                document.getElementById('secretCount').textContent = visits;
+                document.getElementById('firstVisit').textContent = firstVisit || nowStr;
+                document.getElementById('lastVisit').textContent = nowStr;
+                panel.classList.add('visible');
+                
+                setTimeout(() => {
+                    panel.style.opacity = '0';
+                    panel.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                        if (panel.parentNode) panel.remove();
+                    }, 500);
+                }, 20000);
+            }
+            
+            console.log(`%c🔐 زيارات: ${visits} %c| آخر: ${nowStr}`,
+                'color: #ffcc00; font-size: 14px;', 'color: #aaa;');
+        })();
+
+        console.log('❤️ بحبك يا سنية - أعدها جورج خصيصاً لعكته المفضلة ❤️');
     </script>
 </body>
 </html>
