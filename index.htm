@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعكة قلبي ❤️ سنية</title>
+    <style>
+        /* الخطوط والأساسيات */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=El+Messiri:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'El Messiri', sans-serif;
+            background: #0a0015;
+            height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: default;
+            position: relative;
+        }
+
+        /* طبقة الخلفية المتحركة Canvas */
+        #heartCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* الحاوية الرئيسية */
+        .love-container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 30px 20px;
+        }
+
+        /* قلب نابض كبير */
+        .big-heart {
+            font-size: clamp(80px, 15vw, 150px);
+            animation: heartbeat 0.8s infinite alternate;
+            filter: drop-shadow(0 0 30px #ff3366);
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        .big-heart:hover {
+            animation: heartbeatFast 0.3s infinite alternate;
+            transform: scale(1.1);
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); text-shadow: 0 0 20px #ff3366; }
+            100% { transform: scale(1.15); text-shadow: 0 0 50px #ff6699, 0 0 100px #ff0033; }
+        }
+        @keyframes heartbeatFast {
+            0% { transform: scale(1.1); }
+            100% { transform: scale(1.3); }
+        }
+
+        /* عنوان رئيسي بتأثير الكتابة */
+        #typingTitle {
+            color: #fff5e6;
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            text-shadow: 0 0 20px #ff3366, 0 0 40px #ff6699;
+            min-height: 1.5em;
+            border-left: 4px solid #ff3366;
+            padding-left: 15px;
+            animation: blinkBorder 1s infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: 2px;
+        }
+        @keyframes blinkBorder {
+            50% { border-color: transparent; }
+        }
+
+        /* اسم عكة بتأثير شقي */
+        .akka-name {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff0066, #ff9933, #ff0066);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 2s linear infinite;
+            text-shadow: none;
+            filter: drop-shadow(0 0 20px #ff6600);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .akka-name:hover {
+            filter: drop-shadow(0 0 40px #ff0066);
+            transform: rotate(-3deg) scale(1.1);
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* فقاعات رسائل الحب */
+        .message-bubble {
+            background: rgba(255, 51, 102, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 20px 35px;
+            border: 2px solid rgba(255, 102, 153, 0.5);
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #fff0f5;
+            font-weight: 700;
+            animation: floatBubble 3s infinite ease-in-out;
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.4);
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .message-bubble:hover {
+            background: rgba(255, 51, 102, 0.3);
+            box-shadow: 0 0 60px rgba(255, 0, 51, 0.8);
+            transform: scale(1.05);
+        }
+
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* مشغل الموسيقى المخفي */
+        .music-control {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 25px rgba(255, 51, 102, 0.6);
+            margin-top: 20px;
+            z-index: 20;
+        }
+        .music-control:hover {
+            background: rgba(255, 51, 102, 0.5);
+            transform: scale(1.1);
+            box-shadow: 0 0 50px #ff3366;
+        }
+
+        /* جملة سرية تظهر عند النقر على القلب */
+        .secret-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.9);
+            color: #ffcc00;
+            font-size: 2.5rem;
+            font-weight: 900;
+            padding: 30px 50px;
+            border-radius: 30px;
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid #ff0066;
+            box-shadow: 0 0 80px #ff3366;
+            text-align: center;
+            pointer-events: none;
+        }
+        .secret-message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* ضبط الـ responsive */
+        @media (max-width: 600px) {
+            .love-container {
+                gap: 15px;
+                padding: 20px 15px;
+            }
+            .message-bubble {
+                padding: 15px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas للخلفية (قلوب وورود) -->
+    <canvas id="heartCanvas"></canvas>
+
+    <!-- المشغل الصوتي -->
+    <audio id="bgMusic" loop preload="auto">
+        <!-- مقطع صوتي رومانسي حر (يمكنك تغييره) -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+        متصفحك لا يدعم تشغيل الصوت.
+    </audio>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="love-container">
+        
+        <!-- قلب نابض كبير -->
+        <div class="big-heart" id="mainHeart" title="اضغطيني يا عكة">❤️‍🔥</div>
+
+        <!-- عنوان بتأثير كتابة -->
+        <div id="typingTitle"></div>
+
+        <!-- اسم الدلع عكة -->
+        <div class="akka-name" id="akkaText">يا عكة قلبي</div>
+
+        <!-- فقاعة رسالة حب -->
+        <div class="message-bubble">
+            💖 بحبك يا أحلى عكة في الدنيا 💖
+        </div>
+
+        <!-- فقاعة رسالة مزاح -->
+        <div class="message-bubble" style="animation-delay: 0.5s; background: rgba(255, 153, 51, 0.2); border-color: #ff9933;">
+            😂 انتي عكتي المفضلة 😂
+        </div>
+
+        <!-- زر التحكم بالموسيقى -->
+        <button class="music-control" id="musicBtn" title="شغّل الموسيقى">🎵</button>
+    </div>
+
+    <!-- رسالة سرية تظهر عند النقر -->
+    <div class="secret-message" id="secretMsg">
+        بحبك يا سنية ❤️<br>حتى لو كنتي أعتى عكة في التاريخ! 😘
+    </div>
+
+    <script>
+        // ============ 1. خلفية الأمطار (قلوب + ورود) ============
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // رموز القلوب والورود
+        const emojis = ['❤️', '💕', '💖', '💘', '💝', '🌹', '🥀', '✨', '🌸', '💮'];
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * -height;
+                this.size = Math.random() * 30 + 15;
+                this.speedY = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                this.opacity = Math.random() * 0.6 + 0.4;
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = Math.random() * 2 - 1;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.rotSpeed;
+                if (this.y > height + 50) {
+                    this.reset();
+                    this.y = -50;
+                }
+                if (this.x > width + 50) this.x = -50;
+                if (this.x < -50) this.x = width + 50;
+            }
+            draw(ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText(this.emoji, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        // إنشاء 50 جسيم
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw(ctx);
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // ============ 2. تأثير الكتابة الآلية ============
+        const titles = [
+            "مرحباً يا سنية ❤️",
+            "أجمل عكة في الكون 🌍",
+            "حبيبتي المجنونة 😍",
+            "يا مزة يا عكة 😂🔥"
+        ];
+        let titleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typingTitle');
+
+        function typeEffect() {
+            const currentTitle = titles[titleIndex];
+            
+            if (!isDeleting) {
+                typingElement.textContent = currentTitle.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === currentTitle.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 2000); // توقف قبل المسح
+                    return;
+                }
+            } else {
+                typingElement.textContent = currentTitle.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    titleIndex = (titleIndex + 1) % titles.length;
+                }
+            }
+            
+            const speed = isDeleting ? 50 : 100;
+            setTimeout(typeEffect, speed);
+        }
+        typeEffect();
+
+        // ============ 3. الموسيقى والتحكم ============
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let musicPlaying = false;
+
+        // محاولة تشغيل تلقائي (المتصفحات تمنعها غالباً)
+        document.addEventListener('click', function initMusic() {
+            if (!musicPlaying) {
+                bgMusic.play().then(() => {
+                    musicPlaying = true;
+                    musicBtn.textContent = '🔊';
+                }).catch(() => {
+                    musicBtn.textContent = '🔇';
+                });
+            }
+            document.removeEventListener('click', initMusic);
+        }, { once: false });
+
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+                musicBtn.textContent = '🔇';
+            } else {
+                bgMusic.play().then(() => {
+                    musicPlaying = true;
+                    musicBtn.textContent = '🔊';
+                }).catch(() => {
+                    alert('اضغطي أي مكان بالصفحة أولاً لتشغيل الموسيقى يا عكة!');
+                });
+            }
+        });
+
+        // ============ 4. الرسالة السرية ============
+        const mainHeart = document.getElementById('mainHeart');
+        const secretMsg = document.getElementById('secretMsg');
+        let msgTimeout;
+
+        mainHeart.addEventListener('click', (e) => {
+            e.stopPropagation();
+            secretMsg.classList.add('show');
+            clearTimeout(msgTimeout);
+            msgTimeout = setTimeout(() => {
+                secretMsg.classList.remove('show');
+            }, 3000);
+            
+            // تأثير انفجار قلوب صغير
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const p = new Particle();
+                    p.x = e.clientX;
+                    p.y = e.clientY;
+                    p.speedY = -Math.random() * 5 - 2;
+                    p.speedX = Math.random() * 6 - 3;
+                    p.size = Math.random() * 20 + 10;
+                    particles.push(p);
+                    // إزالة الجسيمات الإضافية بعد فترة
+                    setTimeout(() => {
+                        const idx = particles.indexOf(p);
+                        if (idx > -1) particles.splice(idx, 1);
+                    }, 2000);
+                }, i * 50);
+            }
+        });
+
+        // ============ 5. تدوير اسم عكة عند النقر ============
+        const akkaText = document.getElementById('akkaText');
+        const funnyAdjectives = [
+            'يا عكة قلبي',
+            'يا عكة الروح',
+            'أعتى عكة بالتاريخ',
+            'عكتي الحلوة',
+            'يا مزة يا عكة',
+            'عكة و نصف',
+            'سنية العكة',
+            'عكة مدللة'
+        ];
+        let adjIndex = 0;
+        akkaText.addEventListener('click', (e) => {
+            e.stopPropagation();
+            adjIndex = (adjIndex + 1) % funnyAdjectives.length;
+            akkaText.textContent = funnyAdjectives[adjIndex];
+            // تأثير وميض
+            akkaText.style.transform = 'scale(1.2) rotate(5deg)';
+            setTimeout(() => {
+                akkaText.style.transform = 'scale(1) rotate(0)';
+            }, 200);
+        });
+
+        // ============ 6. إخفاء الرسالة السرية عند النقر خارجها ============
+        document.addEventListener('click', function(e) {
+            if (!secretMsg.contains(e.target) && e.target !== mainHeart) {
+                secretMsg.classList.remove('show');
+            }
+        });
+
+        console.log('❤️ بحبك يا سنية - أعدها جورج خصيصاً لعكته المفضلة ❤️');
+    </script>
+</body>
+</html>
